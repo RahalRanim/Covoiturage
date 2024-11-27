@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -15,10 +16,16 @@ public class Trajet {
     private Long idT;
     private String depart;
     private String destination;
-    private Date date;
-    private Date time;
+    private LocalDate date;
+    private LocalTime time;
+    @Column(name = "placeDispo")
     private int placeDispo;
+
+    @Column(name = "prixPlace")
     private double prixPlace;
     @ManyToOne
+    @JoinColumn(name = "conducteur_id")
     private Utilisateur conducteur;
+
+
 }

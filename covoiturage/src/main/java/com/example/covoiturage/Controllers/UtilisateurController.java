@@ -2,6 +2,7 @@ package com.example.covoiturage.Controllers;
 
 import com.example.covoiturage.Entity.Utilisateur;
 import com.example.covoiturage.Services.UtilisateurService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,15 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Utilisateur utilisateur) {
+    public ResponseEntity<?> login(@RequestBody Utilisateur utilisateur, HttpSession session) {
         Utilisateur utilisateurExist = utilisateurService.findByEmail(utilisateur.getEmail());
+
         System.out.println("Utilisateur existant : " + utilisateurExist);
         if (utilisateurExist != null && utilisateurExist.getMdp().equals(utilisateur.getMdp())) {
             System.out.println("Rôle de l'utilisateur : " + utilisateurExist.getRole());
             if ("conducteur".equalsIgnoreCase(utilisateurExist.getRole())) {
-                return ResponseEntity.ok("Bienvenue Conducteur !");
+                session.setAttribute("currentUser", utilisateurExist);
+                return ResponseEntity.ok("Bienvenue Conducteur ! Redirection vers la gestion des trajets.");
             } else if ("passager".equalsIgnoreCase(utilisateurExist.getRole())) {
                 return ResponseEntity.ok("Bienvenue Passager !");
             } else {
