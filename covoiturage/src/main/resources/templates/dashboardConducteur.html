@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard Conducteur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    * {
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        list-style: none;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: "Montserrat", sans-serif;
+    }
+    nav {
+        background: #0082e6;
+        height: 80px;
+        width: 100%;
+    }
+    label.logo {
+        color: white;
+        font-size: 25px;
+        line-height: 80px;
+        padding: 0 100px;
+        font-weight: bold;
+    }
+    .email-display {
+        color: white;
+        font-size: 18px;
+        margin-left: 20px;
+        font-weight: normal;
+    }
+    nav ul {
+        float: right;
+        margin-right: 20px;
+    }
+    nav ul li {
+        display: inline-block;
+        line-height: 80px;
+        margin: 0 5px;
+    }
+    nav ul li a {
+        color: white;
+        font-size: 17px;
+        padding: 7px 13px;
+        border-radius: 3px;
+        text-transform: uppercase;
+    }
+    a.active, a:hover {
+        background: #1b9bff;
+        transition: .5s;
+    }
+</style>
+
+<nav>
+    <!-- Menu icon -->
+    <label class="logo">Co-voiturage</label>
+    <!-- Dynamic email display -->
+    <span class="email-display">Conducteur: <span id="email">[email@example.com]</span></span>
+    <!-- Navigation links -->
+    <ul>
+        <li><a class="active" href="#">Vos trajets</a></li>
+        <li><a href="/ajoutTrajetConducteur">Ajouter un trajet</a></li>
+        <li><a href="#">Trajets proposés</a></li>
+        <li><a href="#">Gestion des avis</a></li>
+    </ul>
+</nav>
+
+<section></section>
+
+<script>
+    // Récupérer l'email depuis le stockage local
+    const emailElement = document.getElementById('email');
+    const userEmail = localStorage.getItem('userEmail') || "email_non_disponible@example.com";
+    emailElement.textContent = userEmail;
+</script>
+</body>
+
+</html>

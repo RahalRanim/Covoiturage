@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard Passager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+<style>
+    /* Google Fonts Link */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        list-style: none;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Montserrat", sans-serif;
+    }
+
+    nav {
+        background: #0082e6;
+        height: 80px;
+        width: 100%;
+        margin-bottom: 0;
+    }
+    .search-nav {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        margin-top: 0;
+    }
+
+    label.logo {
+        color: white;
+        font-size: 25px;
+        line-height: 80px;
+        padding: 0 100px;
+        font-weight: bold;
+    }
+
+    .email-display {
+        color: white;
+        font-size: 18px;
+        margin-left: 20px;
+        font-weight: normal;
+    }
+
+    nav ul {
+        float: right;
+        margin-right: 20px;
+    }
+
+    nav ul li {
+        display: inline-block;
+        line-height: 80px;
+        margin: 0 5px;
+    }
+
+    nav ul li a {
+        color: white;
+        font-size: 17px;
+        padding: 7px 13px;
+        border-radius: 3px;
+        text-transform: uppercase;
+    }
+
+    a.active,
+    a:hover {
+        background: #1b9bff;
+        transition: .5s;
+    }
+
+    .checkbtn {
+        font-size: 22px;
+        color: white;
+        float: right;
+        line-height: 80px;
+        margin-right: 30px;
+        cursor: pointer;
+        display: none;
+    }
+
+    #check {
+        display: none;
+    }
+
+    @media (max-width: 1050px) {
+        label.logo {
+            padding-left: 30px;
+        }
+
+        nav ul li a {
+            font-size: 16px;
+        }
+
+        .email-display {
+            font-size: 16px;
+        }
+    }
+
+    /* Responsive media query code for small screen */
+    @media (max-width: 890px) {
+        .checkbtn {
+            display: block;
+        }
+
+        label.logo {
+            font-size: 22px;
+        }
+
+        ul {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: #2c3e50;
+            top: 80px;
+            left: -100%;
+            text-align: center;
+            transition: all .5s;
+        }
+
+        nav ul li {
+            display: block;
+            margin: 50px 0;
+            line-height: 30px;
+        }
+
+        nav ul li a {
+            font-size: 20px;
+        }
+
+        a:hover,
+        a.active {
+            background: none;
+            color: #0082e6;
+        }
+
+        #check:checked~ul {
+            left: 0;
+        }
+
+        .email-display {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+    }
+
+    section {
+        background-size: cover;
+        height: calc(100vh - 80px);
+    }
+
+    /* Style pour centrer le formulaire de recherche */
+    .search-nav {
+        background-color: #f8f9fa; /* Couleur de fond */
+        padding: 10px 0;
+    }
+
+    .search-nav .container-fluid {
+        display: flex;
+        justify-content: center; /* Centre le formulaire horizontalement */
+        align-items: center; /* Centre le formulaire verticalement */
+    }
+
+    .search-nav form {
+        display: flex;
+        justify-content: center; /* Centre les éléments du formulaire */
+        flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur des écrans plus petits */
+        gap: 10px;
+    }
+
+    .search-nav input {
+        width: 200px; /* Largeur des champs de saisie */
+    }
+
+    .search-nav button {
+        margin-left: 10px; /* Espacement entre le bouton et les champs */
+    }
+</style>
+
+<nav>
+    <!-- Menu icon -->
+    <label class="logo">Co-voiturage</label>
+    <!-- Dynamic email display -->
+    <span class="email-display">Passager: <span id="email">[email@example.com]</span></span>
+    <!-- Navigation links -->
+    <ul>
+        <li><a class="active" href="#">Liste des trajets</a></li>
+        <li><a href="#">Vos trajets proposés</a></li>
+        <li><a href="#">Gestion des réservations</a></li>
+        <li><a href="#">Gestion des avis</a></li>
+    </ul>
+</nav>
+
+<section>
+    <nav class="navbar bg-body-tertiary search-nav">
+        <div class="container-fluid">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="text" placeholder="Point de départ" aria-label="Pointdep">
+                <input class="form-control me-2" type="text" placeholder="Point de destination" aria-label="Pointdest">
+                <input class="form-control me-2" type="date" placeholder="Date de départ" aria-label="Datedep">
+                <input class="form-control me-2" type="text" placeholder="Heure:Minute de départ" aria-label="Datedep">
+                <input class="form-control me-2" type="number" placeholder="Prix maximum" aria-label="Prixmax">
+                <input class="form-control me-2" type="text" placeholder="Conducteur" aria-label="Conduct">
+                <button class="btn btn-outline-success" type="submit">Chercher</button>
+            </form>
+        </div>
+    </nav>
+</section>
+
+<script>
+    // Récupérer l'email depuis le stockage local
+    const emailElement = document.getElementById('email');
+    const userEmail = localStorage.getItem('userEmail') || "email_non_disponible@example.com";
+    emailElement.textContent = userEmail;
+</script>
+</body>
+
+</html>

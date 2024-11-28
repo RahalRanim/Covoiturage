@@ -25,19 +25,35 @@ public class UtilisateurController {
     public ResponseEntity<?> login(@RequestBody Utilisateur utilisateur, HttpSession session) {
         Utilisateur utilisateurExist = utilisateurService.findByEmail(utilisateur.getEmail());
 
-        System.out.println("Utilisateur existant : " + utilisateurExist);
         if (utilisateurExist != null && utilisateurExist.getMdp().equals(utilisateur.getMdp())) {
-            System.out.println("Rôle de l'utilisateur : " + utilisateurExist.getRole());
             if ("conducteur".equalsIgnoreCase(utilisateurExist.getRole())) {
                 session.setAttribute("currentUser", utilisateurExist);
-                return ResponseEntity.ok("Bienvenue Conducteur ! Redirection vers la gestion des trajets.");
+                return ResponseEntity.ok(new LoginResponse("conducteur"));
             } else if ("passager".equalsIgnoreCase(utilisateurExist.getRole())) {
-                return ResponseEntity.ok("Bienvenue Passager !");
+                return ResponseEntity.ok(new LoginResponse("passager"));
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Rôle inconnu !");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new LoginResponse("Rôle inconnu"));
             }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiants invalides");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Identifiants invalides"));
         }
     }
+
+    public static class LoginResponse {
+        private String message;
+
+        public LoginResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
+
+
 }
