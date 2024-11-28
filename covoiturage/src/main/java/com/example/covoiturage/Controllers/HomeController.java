@@ -26,5 +26,10 @@ public class HomeController {
         return "ajoutTrajetConducteur";
     }
 
+    @GetMapping("/gestReservation")
+    public String gestReservation() {
+        return "gestReservation";
+    }
+
 }
 

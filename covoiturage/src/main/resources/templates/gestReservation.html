@@ -194,38 +194,21 @@
     <span class="email-display">Passager: <span id="email">[email@example.com]</span></span>
     <!-- Navigation links -->
     <ul>
-        <li><a class="active" href="#">Liste des trajets</a></li>
+        <li><a class="active" href="/dashboardPassager">Liste des trajets</a></li>
         <li><a href="#">Vos trajets proposés</a></li>
-        <li><a href="/gestReservation">Gestion des réservations</a></li>
+        <li><a href="#">Gestion des réservations</a></li>
         <li><a href="#">Gestion des avis</a></li>
     </ul>
 </nav>
 
-<section>
-    <nav class="navbar bg-body-tertiary search-nav">
-        <div class="container-fluid">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="text" placeholder="Point de départ" aria-label="Pointdep">
-                <input class="form-control me-2" type="text" placeholder="Point de destination" aria-label="Pointdest">
-                <input class="form-control me-2" type="date" placeholder="Date de départ" aria-label="Datedep">
-                <input class="form-control me-2" type="text" placeholder="Heure:Minute de départ" aria-label="Datedep">
-                <input class="form-control me-2" type="number" placeholder="Prix maximum" aria-label="Prixmax">
-                <input class="form-control me-2" type="text" placeholder="Conducteur" aria-label="Conduct">
-                <button class="btn btn-outline-success" type="submit">Chercher</button>
-            </form>
-        </div>
-    </nav>
-
-    <div class="card" style="width: 18rem;">
-        <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Réserver</a>
-        </div>
+<div class="card" style="width: 18rem;">
+    <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-danger">Supprimer</a>
     </div>
-</section>
-
+</div>
 
 <script>
     // Récupérer l'email depuis le stockage local

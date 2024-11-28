@@ -47,6 +47,8 @@ public class TrajetController {
             return ResponseEntity.badRequest().body("L'utilisateur doit être un conducteur pour ajouter un trajet.");
         }
     }
+
+
 /*
     @GetMapping("/mes-trajets")
     public List<Trajet> afficherMesTrajets(HttpSession session) {

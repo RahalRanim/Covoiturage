@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "Trajet")
 public class Trajet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,14 +19,12 @@ public class Trajet {
     private String destination;
     private LocalDate date;
     private LocalTime time;
-    @Column(name = "placeDispo")
+    @Column(name = "place_dispo")
     private int placeDispo;
 
-    @Column(name = "prixPlace")
+    @Column(name = "prix_place")
     private double prixPlace;
     @ManyToOne
     @JoinColumn(name = "conducteur_id")
     private Utilisateur conducteur;
-
-
 }

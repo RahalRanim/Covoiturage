@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface TrajetRepository extends JpaRepository<Trajet, Long> {
+    // Recherche des trajets par conducteur
     List<Trajet> findByConducteur(Utilisateur conducteur);
 
     // Recherche d'un trajet similaire pour un conducteur donné
@@ -35,5 +36,5 @@ public interface TrajetRepository extends JpaRepository<Trajet, Long> {
             @Param("nomConducteur") String nomConducteur,
             @Param("prenomConducteur") String prenomConducteur);
 
-
+    List<Trajet> findByPlaceDispoGreaterThan(int placeDispo);
 }
