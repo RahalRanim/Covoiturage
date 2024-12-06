@@ -12,7 +12,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idR;
     @ManyToOne
+    @JoinColumn(name = "passager_id", nullable = false)
     private Utilisateur passager;
     @ManyToOne
+    @JoinColumn(name = "trajet_id", nullable = false)
     private Trajet trajet;
+    @Column(name = "nombre_places")
+    private int nombreDePlaces;
 }

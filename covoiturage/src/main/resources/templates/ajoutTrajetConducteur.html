@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
     <meta charset="utf-8">
     <title>Dashboard Conducteur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Font Awesome Link for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
-
 <body>
 <style>
-    /* Google Fonts Link */
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
     * {
@@ -27,46 +23,67 @@
         font-family: "Montserrat", sans-serif;
     }
 
+    /* Style pour la barre de navigation */
     nav {
         background: #0082e6;
         height: 80px;
-        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        flex-wrap: nowrap;  /* Empêche le retour à la ligne */
     }
 
+    /* Logo de la barre de navigation */
     label.logo {
         color: white;
         font-size: 25px;
-        line-height: 80px;
-        padding: 0 100px;
         font-weight: bold;
+    }
+
+    /* Liens de la barre de navigation */
+    .navbar-links {
+        display: flex;
+        gap: 20px;  /* Espacement entre les liens */
+    }
+
+    .navbar-links a {
+        color: white;
+        font-size: 17px;
+        padding: 10px 20px;
+        border-radius: 3px;
+        text-transform: uppercase;
+    }
+
+    .navbar-links a.active, .navbar-links a:hover {
+        background: #1b9bff;
+        transition: 0.5s;
+    }
+
+    /* Conteneur des éléments à droite (email et bouton) */
+    .right-items {
+        display: flex;
+        align-items: center;
+        gap: 20px;
     }
 
     .email-display {
         color: white;
         font-size: 18px;
-        margin-left: 20px;
-        font-weight: normal;
     }
 
-    nav ul {
-        float: right;
-        margin-right: 20px;
-        list-style-type: none;
-    }
-
-    nav ul li {
-        display: inline-block;
-        line-height: 80px;
-        margin: 0 5px;
-    }
-
-    nav ul li a {
+    .rating-btn {
+        background-color: #ffc107;
         color: white;
-        font-size: 17px;
-        padding: 7px 13px;
+        border: none;
         border-radius: 3px;
-        text-transform: uppercase;
-        text-decoration: none;
+        padding: 5px 10px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .rating-btn i {
+        margin-right: 5px;
     }
 
     a.active,
@@ -74,87 +91,13 @@
         background: #1b9bff;
         transition: .5s;
         text-decoration: none;
+        list-style-type: none;
     }
 
-    .checkbtn {
-        font-size: 22px;
-        color: white;
-        float: right;
-        line-height: 80px;
-        margin-right: 30px;
-        cursor: pointer;
-        display: none;
-    }
 
-    #check {
-        display: none;
-    }
-
-    @media (max-width: 1050px) {
-        label.logo {
-            padding-left: 30px;
-        }
-
-        nav ul li a {
-            font-size: 16px;
-        }
-
-        .email-display {
-            font-size: 16px;
-        }
-    }
-
-    /* Responsive media query code for small screen */
-    @media (max-width: 890px) {
-        .checkbtn {
-            display: block;
-        }
-
-        label.logo {
-            font-size: 22px;
-        }
-
-        ul {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            background: #2c3e50;
-            top: 80px;
-            left: -100%;
-            text-align: center;
-            transition: all .5s;
-        }
-
-        nav ul li {
-            display: block;
-            margin: 50px 0;
-            line-height: 30px;
-
-        }
-
-        nav ul li a {
-            font-size: 20px;
-        }
-
-        a:hover,
-        a.active {
-            background: none;
-            color: white;
-        }
-
-        #check:checked~ul {
-            left: 0;
-        }
-
-        .email-display {
-            margin-top: 20px;
-            display: block;
-            text-align: center;
-        }
-    }
-
-    /* Section contenant le formulaire */
+    /* Formulaire centré */
     section {
+        margin-top: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -169,62 +112,67 @@
         height: 100%; /* S'assure que le conteneur occupe toute la hauteur */
     }
 
-    /* Formulaire centré */
     form {
-        max-width: 400px; /* Limite la taille du formulaire */
-        width: 100%; /* S'adapte à la largeur du parent */
+        max-width: 400px;
+        width: 100%;
         padding: 20px;
         background-color: #f9f9f9;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
+    /* Nouveau bouton de déconnexion */
+    .logout-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .logout-btn i {
+        margin-right: 5px;
+    }
+
 </style>
 
 <nav>
-    <!-- Checkbox for toggling menu -->
-    <input type="checkbox" id="check">
-
-    <!-- Menu icon -->
-    <label for="check" class="checkbtn">
-        <i class="fas fa-bars"></i>
-    </label>
-
-    <!-- Site logo -->
     <label class="logo">Co-voiturage</label>
-
-    <!-- Dynamic email display -->
-    <span class="email-display">Conducteur: <span id="email">[email@example.com]</span></span>
-
-    <!-- Navigation links -->
-    <ul>
-        <li><a href="/dashboardConducteur">Vos trajets</a></li>
-        <li><a class="active" href="#">Ajouter un trajet</a></li>
-        <li><a href="#">Trajets proposés</a></li>
-        <li><a href="#">Gestion des avis</a></li>
-    </ul>
+    <div class="navbar-links">
+        <a  href="/dashboardConducteur">Vos trajets</a>
+        <a class="active" href="#">Ajouter un trajet</a>
+    </div>
+    <div class="right-items">
+        <span class="email-display">Conducteur: <span id="email">[email@example.com]</span></span>
+        <button class="rating-btn">
+            <i class="fa fa-star"></i>
+            <span id="average-rating">Chargement...</span>
+        </button>
+        <!-- Nouveau bouton de déconnexion -->
+        <button class="logout-btn" onclick="deconnecter()">
+            <i class="fa fa-sign-out-alt"></i>
+        </button>
+    </div>
 </nav>
 
-<!-- Section for image -->
 <section class="form-container">
-    <form class="border p-4 shadow-sm bg-light w-100" style="max-width: 400px;">
+    <form id="ajouterTrajetForm" class="border p-4 shadow-sm bg-light w-100" style="max-width: 400px;">
         <div class="mb-3">
-            <label for="villedep" class="form-label font-weight-bold">Ville de départ</label>
-            <input type="text" class="form-control" id="villedep">
+            <label for="depart" class="form-label font-weight-bold">Ville de départ</label>
+            <input type="text" class="form-control" id="depart" required>
         </div>
         <div class="mb-3">
-            <label for="villedest" class="form-label font-weight-bold">Ville de destination</label>
-            <input type="text" class="form-control" id="villedest">
+            <label for="destination" class="form-label font-weight-bold">Ville de destination</label>
+            <input type="text" class="form-control" id="destination" required>
         </div>
-
         <div class="mb-3">
             <label for="date" class="form-label font-weight-bold">Date de départ</label>
-            <input type="date" class="form-control" id="date">
+            <input type="date" class="form-control" id="date" required>
         </div>
-
         <div class="mb-3">
-            <label for="heure" class="form-label font-weight-bold">Heure de départ</label>
-            <select class="form-control" id="heure">
+            <label for="time" class="form-label font-weight-bold">Heure de départ</label>
+            <select class="form-control" id="time" required>
                 <option value="00:00">00:00</option>
                 <option value="01:00">01:00</option>
                 <option value="02:00">02:00</option>
@@ -251,35 +199,109 @@
                 <option value="23:00">23:00</option>
             </select>
         </div>
-
         <div class="mb-3">
-            <label for="placedispo" class="form-label font-weight-bold">Nombre de places disponibles</label>
-            <input type="number" class="form-control" id="placedispo">
+            <label for="placeDispo" class="form-label font-weight-bold">Nombre de places disponibles</label>
+            <input type="number" class="form-control" id="placeDispo" required>
         </div>
-
         <div class="mb-3">
-            <label for="prix" class="form-label font-weight-bold">Prix /place</label>
-            <input type="number" class="form-control" id="prix">
+            <label for="prixPlace" class="form-label font-weight-bold">Prix par place (Dt)</label>
+            <input type="number" class="form-control" id="prixPlace" required>
         </div>
-
-        <div class="mb-3">
-            <label for="com" class="form-label font-weight-bold">Commentaires</label>
-            <textarea class="form-control" id="com" rows="3"></textarea>
-        </div>
-
-        <!-- Buttons on the same line -->
-        <div class="d-flex justify-content-between">
+        <div class="text-center">
             <button type="submit" class="btn btn-primary">Ajouter</button>
             <button type="reset" class="btn btn-danger">Annuler</button>
         </div>
     </form>
 </section>
 
-<!-- JS files -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<script>
+    // Récupérer l'email depuis le stockage local
+    const emailElement = document.getElementById('email');
+    const userEmail = localStorage.getItem('userEmail') || "email_non_disponible@example.com";
+    emailElement.textContent = userEmail;
 
+    window.onload = function() {
+        recupererMoyenneNotes();
+    };
+
+    // Fonction pour récupérer la moyenne des notes de l'utilisateur
+    async function recupererMoyenneNotes() {
+        const averageRatingElement = document.getElementById('average-rating');
+        try {
+            if (!userEmail) {
+                throw new Error("Email utilisateur non défini");
+            }
+
+            const response = await fetch(`http://localhost:8082/api/moyenne-avis?email=${userEmail}`);
+            console.log("Réponse de l'API reçue:", response);
+
+            if (!response.ok) {
+                throw new Error("Erreur dans la réponse de l'API");
+            }
+
+            const moyenneAvis = await response.json();
+
+            if (moyenneAvis != null) {
+                averageRatingElement.textContent = moyenneAvis.toFixed(2);
+            } else {
+                throw new Error("Moyenne des avis invalide");
+            }
+
+        } catch (error) {
+            console.error("Erreur lors de la récupération de la moyenne des notes:", error);
+            averageRatingElement.textContent = "Erreur";
+        }
+    }
+
+    const form = document.getElementById('ajouterTrajetForm');
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // Récupérer l'email depuis localStorage
+        const email = localStorage.getItem('userEmail');  // Récupérer l'email enregistré dans localStorage
+
+        // Si l'email n'est pas trouvé dans localStorage
+        if (!email) {
+            alert('Utilisateur non connecté');
+            return;
+        }
+
+        const data = {
+            depart: document.getElementById('depart').value,
+            destination: document.getElementById('destination').value,
+            date: document.getElementById('date').value,
+            time: document.getElementById('time').value,
+            placeDispo: document.getElementById('placeDispo').value,
+            prixPlace: document.getElementById('prixPlace').value,
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8082/api/ajouter?email=${encodeURIComponent(email)}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                alert('Trajet ajouté avec succès');
+                form.reset(); // Réinitialiser le formulaire après la soumission
+            } else {
+                alert('Erreur lors de l\'ajout du trajet');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Erreur réseau');
+        }
+    });
+    // Fonction de déconnexion
+    function deconnecter() {
+        // Supprimer l'email du stockage local (ou toute autre info de session)
+        localStorage.removeItem('userEmail');
+        // Rediriger vers la page index.html
+        window.location.href = '/';
+    }
+</script>
 </body>
-
 </html>

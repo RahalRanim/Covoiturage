@@ -7,206 +7,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        nav {
+            background: #0082e6;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        label.logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-links a {
+            color: white;
+            font-size: 17px;
+            padding: 10px 20px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .navbar-links a.active,
+        .navbar-links a:hover {
+            background: #1b9bff;
+            transition: 0.5s;
+        }
+
+        .right-items {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .email-display {
+            color: white;
+            font-size: 18px;
+        }
+
+        #trajets-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);  /* 4 columns per row */
+            gap: 20px;  /* Space between the cards */
+            justify-items: center;  /* Center the cards horizontally */
+            margin-top: 20px;
+        }
+        .card {
+            width: 100%;  /* Make the cards take full width within the grid column */
+            max-width: 30rem;  /* Set a maximum width for each card */
+            width: 18rem ;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .logout-btn i {
+            margin-right: 5px;
+        }
+
+        .rating-btn {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .rating-btn i {
+            margin-right: 5px;
+        }
+        a.active,
+        a:hover {
+            background: #1b9bff;
+            transition: .5s;
+            text-decoration: none;
+            list-style-type: none;
+        }
+    </style>
 </head>
 
 <body>
-<style>
-    /* Google Fonts Link */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-    * {
-        padding: 0;
-        margin: 0;
-        text-decoration: none;
-        list-style: none;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: "Montserrat", sans-serif;
-    }
-
-    nav {
-        background: #0082e6;
-        height: 80px;
-        width: 100%;
-        margin-bottom: 0;
-    }
-    .search-nav {
-        background-color: #f8f9fa;
-        padding: 10px 0;
-        margin-top: 0;
-    }
-
-    label.logo {
-        color: white;
-        font-size: 25px;
-        line-height: 80px;
-        padding: 0 100px;
-        font-weight: bold;
-    }
-
-    .email-display {
-        color: white;
-        font-size: 18px;
-        margin-left: 20px;
-        font-weight: normal;
-    }
-
-    nav ul {
-        float: right;
-        margin-right: 20px;
-    }
-
-    nav ul li {
-        display: inline-block;
-        line-height: 80px;
-        margin: 0 5px;
-    }
-
-    nav ul li a {
-        color: white;
-        font-size: 17px;
-        padding: 7px 13px;
-        border-radius: 3px;
-        text-transform: uppercase;
-    }
-
-    a.active,
-    a:hover {
-        background: #1b9bff;
-        transition: .5s;
-    }
-
-    .checkbtn {
-        font-size: 22px;
-        color: white;
-        float: right;
-        line-height: 80px;
-        margin-right: 30px;
-        cursor: pointer;
-        display: none;
-    }
-
-    #check {
-        display: none;
-    }
-
-    @media (max-width: 1050px) {
-        label.logo {
-            padding-left: 30px;
-        }
-
-        nav ul li a {
-            font-size: 16px;
-        }
-
-        .email-display {
-            font-size: 16px;
-        }
-    }
-
-    /* Responsive media query code for small screen */
-    @media (max-width: 890px) {
-        .checkbtn {
-            display: block;
-        }
-
-        label.logo {
-            font-size: 22px;
-        }
-
-        ul {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            background: #2c3e50;
-            top: 80px;
-            left: -100%;
-            text-align: center;
-            transition: all .5s;
-        }
-
-        nav ul li {
-            display: block;
-            margin: 50px 0;
-            line-height: 30px;
-        }
-
-        nav ul li a {
-            font-size: 20px;
-        }
-
-        a:hover,
-        a.active {
-            background: none;
-            color: #0082e6;
-        }
-
-        #check:checked~ul {
-            left: 0;
-        }
-
-        .email-display {
-            margin-top: 20px;
-            display: block;
-            text-align: center;
-        }
-    }
-
-    section {
-        background-size: cover;
-        height: calc(100vh - 80px);
-    }
-
-    /* Style pour centrer le formulaire de recherche */
-    .search-nav {
-        background-color: #f8f9fa; /* Couleur de fond */
-        padding: 10px 0;
-    }
-
-    .search-nav .container-fluid {
-        display: flex;
-        justify-content: center; /* Centre le formulaire horizontalement */
-        align-items: center; /* Centre le formulaire verticalement */
-    }
-
-    .search-nav form {
-        display: flex;
-        justify-content: center; /* Centre les éléments du formulaire */
-        flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur des écrans plus petits */
-        gap: 10px;
-    }
-
-    .search-nav input {
-        width: 200px; /* Largeur des champs de saisie */
-    }
-
-    .search-nav button {
-        margin-left: 10px; /* Espacement entre le bouton et les champs */
-    }
-</style>
-
 <nav>
-    <!-- Menu icon -->
     <label class="logo">Co-voiturage</label>
-    <!-- Dynamic email display -->
-    <span class="email-display">Passager: <span id="email">[email@example.com]</span></span>
-    <!-- Navigation links -->
-    <ul>
-        <li><a class="active" href="/dashboardPassager">Liste des trajets</a></li>
-        <li><a href="#">Vos trajets proposés</a></li>
-        <li><a href="#">Gestion des réservations</a></li>
-        <li><a href="#">Gestion des avis</a></li>
-    </ul>
+    <div class="navbar-links">
+        <a href="/dashboardPassager">Liste des trajets</a>
+        <a class="active" href="#">Gestion des réservations</a>
+    </div>
+    <div class="right-items">
+        <span class="email-display">Passager: <span id="email">[email@example.com]</span></span>
+        <button class="rating-btn">
+            <i class="fa fa-star"></i>
+            <span id="average-rating">Chargement...</span>
+        </button>
+        <button class="logout-btn" onclick="deconnecter()">
+            <i class="fa fa-sign-out-alt"></i>
+        </button>
+    </div>
 </nav>
 
-<div class="card" style="width: 18rem;">
-    <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-danger">Supprimer</a>
+<section id="trajets-container" class="container"></section>
+
+<!-- Modal Bootstrap pour l'évaluation -->
+<div id="evalmodel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="evalmodelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="evalmodelLabel">Évaluer le Trajet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="note">Note</label>
+                        <input type="number" id="note" class="form-control" placeholder="Entrez une note (1-5)" min="1" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descp">Description</label>
+                        <textarea id="descp" class="form-control" placeholder="Entrez une description" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" id="confirmerEvaluation">Envoyer</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -215,7 +172,219 @@
     const emailElement = document.getElementById('email');
     const userEmail = localStorage.getItem('userEmail') || "email_non_disponible@example.com";
     emailElement.textContent = userEmail;
-</script>
-</body>
 
+    window.onload = function() {
+        recupererMoyenneNotes();
+    };
+
+    // Fonction pour récupérer la moyenne des notes de l'utilisateur
+    async function recupererMoyenneNotes() {
+        const averageRatingElement = document.getElementById('average-rating');
+        try {
+            if (!userEmail) {
+                throw new Error("Email utilisateur non défini");
+            }
+
+            const response = await fetch(`http://localhost:8082/api/moyenne-avis?email=${userEmail}`);
+            console.log("Réponse de l'API reçue:", response);
+
+            if (!response.ok) {
+                throw new Error("Erreur dans la réponse de l'API");
+            }
+
+            const moyenneAvis = await response.json();
+
+            if (moyenneAvis != null) {
+                averageRatingElement.textContent = moyenneAvis.toFixed(2);
+            } else {
+                throw new Error("Moyenne des avis invalide");
+            }
+
+        } catch (error) {
+            console.error("Erreur lors de la récupération de la moyenne des notes:", error);
+            averageRatingElement.textContent = "Erreur";
+        }
+    }
+
+    // Déconnexion
+    function deconnecter() {
+        localStorage.removeItem('userEmail');
+        window.location.replace('/'); // Redirection après déconnexion
+    }
+
+    async function chargerReservations() {
+        try {
+            const response = await fetch(`http://localhost:8082/api/historique?email=${userEmail}`);
+            if (!response.ok) {
+                throw new Error("Erreur lors de la récupération des réservations");
+            }
+
+            const reservations = await response.json();
+            console.log("Réservations récupérées:", reservations);
+            const trajetsContainer = document.getElementById('trajets-container');
+
+            if (reservations.length === 0) {
+                trajetsContainer.innerHTML = '<p class="text-danger">Vous n\'avez effectué aucune réservation pour le moment.</p>';
+                return;
+            }
+
+            for (let reservation of reservations) {
+                const trajet = reservation.trajet; // Extraire l'objet trajet
+                const isValid = await isTrajetValid(trajet.idT);  // Attendre la validation du trajet
+
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="Un trajet">
+                <div class="card-body">
+                    <h5 class="card-title">De: <font color="#8a2be2"><i>${trajet.depart}</i></font></h5>
+                    <h5 class="card-title">À: <font color="#8a2be2"><i>${trajet.destination}</i></font></h5>
+                    <p class="card-text">
+                        Date: ${trajet.date} <br>
+                        Heure: ${trajet.time} <br>
+                        Places disponibles: ${trajet.placeDispo} <br>
+                        Prix par place: ${trajet.prixPlace} <i>Dt</i> <br>
+                        Places réservées: ${reservation.nombreDePlaces} <br>
+                        Prix total: ${reservation.nombreDePlaces * trajet.prixPlace} <i>Dt</i>
+                    </p>
+                    ${isValid ? `<a href="#" class="btn btn-outline-primary" onclick="ouvrirModal(${trajet.idT}, '${userEmail}')">Évaluer ⭐</a>` : ''}
+                    <a href="#" class="btn btn-danger" onclick="supprimerReservation(${reservation.idR}, '${userEmail}')">Supprimer</a>
+                </div>
+            `;
+                trajetsContainer.appendChild(card);
+            }
+        } catch (error) {
+            console.error("Erreur:", error);
+            trajetsContainer.innerHTML = `<p class="text-danger">Erreur lors de la récupération des réservations: ${error.message}</p>`;
+        }
+    }
+
+
+    async function supprimerReservation(reservationId, userEmail) {
+        if (!reservationId || reservationId === "undefined") {
+            alert("ID de réservation invalide.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8082/api/annuler?reservationId=${reservationId}&email=${userEmail}`, {
+                method: 'DELETE',
+            });
+
+
+            if (response.ok) {
+
+                const message = await response.text();
+                alert(message || 'Réservation annulée avec succès.');
+            } else {
+
+                const errorMessage = await response.text();
+                alert(errorMessage || "Une erreur est survenue lors de l'annulation.");
+            }
+        } catch (error) {
+            // En cas d'erreur réseau ou autre
+            console.error('Erreur lors de la suppression de la réservation :', error);
+            alert("Une erreur est survenue lors de l'annulation.");
+        }
+    }
+
+
+    // Attacher l'événement de suppression à chaque bouton "Supprimer"
+    document.querySelectorAll('.btn-danger').forEach((button) => {
+        button.addEventListener('click', function() {
+            const reservationId = this.closest('.card').getAttribute('data-reservation-id');
+            supprimerReservation(reservationId);
+        });
+    });
+
+    // Charger les réservations au démarrage
+    chargerReservations();
+
+    function ouvrirModal(idTrajet, userEmail) {
+        // Afficher le modal en utilisant Bootstrap
+        const modal = document.getElementById('evalmodel');
+        $('#evalmodel').modal('toggle');  // Utilisation de 'toggle' pour afficher/masquer le modal
+
+        const confirmerEvaluationBtn = document.getElementById('confirmerEvaluation');
+        confirmerEvaluationBtn.onclick = function() {
+            EvaluerTrajet(idTrajet, userEmail);  // Appel de la fonction d'évaluation
+        };
+
+        // Fermeture du modal lorsque le bouton "Close" (icône ×) est cliqué
+        const closeBtn = document.querySelector('.close');
+        closeBtn.onclick = function() {
+            $('#evalmodel').modal('hide');  // Utilisation de la méthode Bootstrap pour fermer le modal
+        };
+
+        // Fermeture du modal si l'utilisateur clique en dehors du modal
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                $('#evalmodel').modal('hide');
+            }
+        };
+    }
+
+
+    //Evaluer
+    function EvaluerTrajet(idTrajet,userEmail) {
+        const note = document.getElementById('note').value;
+        const descp = document.getElementById('descp').value;
+
+        const avisRequest = {
+            note: note,
+            descp: descp
+        };
+
+
+        fetch(`http://localhost:8082/api/evaluer?emailUtilisateur=${userEmail}&idTrajet=${idTrajet}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(avisRequest)
+        })
+            .then(async response => {
+                const result = await response.text();
+
+                if (!response.ok) {
+                    throw new Error(result);
+                }
+
+                return result;
+            })
+            .then(message => {
+                alert(message);
+                $('#evalmodel').modal('hide');
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'évaluation :', error.message);
+                alert("Erreur : " + error.message);
+            });
+
+    }
+
+    async function isTrajetValid(idTrajet) {
+        try {
+            const response = await fetch(`http://localhost:8082/api/trajet-is-valid?idT=${idTrajet}`);
+
+            if (!response.ok) {
+                throw new Error("Erreur lors de la vérification de la validité du trajet");
+            }
+
+            // Récupérer et retourner la réponse JSON (vrai ou faux)
+            const isValid = await response.json();
+            return isValid;  // Retourne directement la valeur
+        } catch (error) {
+            console.error("Erreur dans la fonction trajetIsValid:", error);
+            return false;  // Si une erreur se produit, on retourne false
+        }
+    }
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+</body>
 </html>

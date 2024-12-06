@@ -37,4 +37,5 @@ public interface TrajetRepository extends JpaRepository<Trajet, Long> {
             @Param("prenomConducteur") String prenomConducteur);
 
     List<Trajet> findByPlaceDispoGreaterThan(int placeDispo);
+
 }

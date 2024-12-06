@@ -1,8 +1,5 @@
 package com.example.covoiturage.Entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -19,13 +16,14 @@ public class Utilisateur {
     private String role;
     // Méthode pour vérifier si l'utilisateur est conducteur
     public boolean isEstConducteur() {
-        return "conducteur".equalsIgnoreCase(this.role);  // Vérifie si le rôle est 'conducteur'
+        return "conducteur".equalsIgnoreCase(this.role);
     }
 
     // Méthode pour vérifier si l'utilisateur est passager
     public boolean isEstPassager() {
-        return "passager".equalsIgnoreCase(this.role);  // Vérifie si le rôle est 'passager'
+        return "passager".equalsIgnoreCase(this.role);
     }
+
 
 
 }

@@ -27,11 +27,6 @@ public class TrajetServiceImpl implements TrajetService {
         trajet.setConducteur(conducteur); // Associer le conducteur au trajet
         return trajetRepository.save(trajet); // Enregistrer le trajet
     }
-/*
-    @Override
-    public List<Trajet> afficherTrajetsParConducteur(Utilisateur conducteur) {
-        return trajetRepository.findByConducteur(conducteur); // Récupérer les trajets du conducteur
-    }*/
 
     @Override
     public List<Trajet> afficherTrajetsParConducteur(Utilisateur conducteur) {
@@ -56,6 +51,26 @@ public class TrajetServiceImpl implements TrajetService {
     public List<Trajet> rechercherTrajets(String depart, String destination, LocalDate date, LocalTime time, Double prixMax, String nomConducteur, String prenomConducteur) {
         // Appel au repository pour effectuer la recherche
         return trajetRepository.rechercheAvanceeTrajets(depart, destination, date, time, prixMax, nomConducteur, prenomConducteur);
+    }
+
+    @Override
+    public List<Trajet> getTrajetsDisponiblesPourPassager() {
+        return trajetRepository.findByPlaceDispoGreaterThan(0); // Utilisation de la méthode optimisée du repository
+    }
+
+    @Override
+    public Trajet getTrajetById(Long trajetId) {
+        return trajetRepository.findById(trajetId)
+                .orElseThrow(() -> new IllegalArgumentException("Trajet introuvable."));
+    }
+
+    @Override
+    public boolean isTrajetStillValid(Long trajetId) {
+        Trajet trajet = trajetRepository.findById(trajetId)
+                .orElseThrow(() -> new RuntimeException("Trajet introuvable avec l'ID : " + trajetId));
+
+        // Comparer la date du trajet avec la date actuelle
+        return trajet.getDate().isBefore(LocalDate.now());
     }
 
 

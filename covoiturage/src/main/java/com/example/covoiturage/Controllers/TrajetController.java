@@ -33,45 +33,51 @@ public class TrajetController {
     public ResponseEntity<?> ajouterTrajet(@RequestBody Trajet trajet, @RequestParam("email") String emailConducteur) {
         Utilisateur conducteur = utilisateurService.findByEmail(emailConducteur);
 
-        // Vérifier si l'utilisateur est un conducteur
-        if (conducteur != null && conducteur.isEstConducteur()) {
-            // Vérifier si le trajet existe déjà
-            if (trajetService.trajetExiste(trajet, conducteur)) {
-                return ResponseEntity.badRequest().body("Un trajet similaire existe déjà.");
-            }
-
-            // Ajouter le trajet
-            Trajet nouveauTrajet = trajetService.ajouterTrajet(trajet, conducteur);
-            return ResponseEntity.ok(nouveauTrajet);
-        } else {
+        if (conducteur == null || !conducteur.isEstConducteur()) {
             return ResponseEntity.badRequest().body("L'utilisateur doit être un conducteur pour ajouter un trajet.");
         }
+
+        if (trajet.getDepart() == null || trajet.getDestination() == null || trajet.getDate() == null || trajet.getTime() == null) {
+            return ResponseEntity.badRequest().body("Tous les champs doivent être remplis.");
+        }
+
+        if (trajetService.trajetExiste(trajet, conducteur)) {
+            return ResponseEntity.badRequest().body("Un trajet similaire existe déjà.");
+        }
+
+        Trajet nouveauTrajet = trajetService.ajouterTrajet(trajet, conducteur);
+        return ResponseEntity.ok(nouveauTrajet);
     }
 
-
-/*
-    @GetMapping("/mes-trajets")
-    public List<Trajet> afficherMesTrajets(HttpSession session) {
-        Utilisateur currentUser = (Utilisateur) session.getAttribute("currentUser"); // Récupérer l'utilisateur connecté
-        if (currentUser != null && currentUser.isEstConducteur()) {
-            return trajetService.afficherTrajetsParConducteur(currentUser); // Afficher les trajets du conducteur
-        } else {
-            return null; // Aucun trajet ou utilisateur non autorisé
-        }
-    }*/
 
 
     @RequestMapping("/mes-trajets")
-    public ResponseEntity<?> afficherTrajets(HttpSession session) {
-        Utilisateur utilisateurConnecte = (Utilisateur) session.getAttribute("currentUser");
-
-        if (utilisateurConnecte == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur non connecté");
+    public ResponseEntity<?> afficherTrajets(@RequestParam("email") String emailConducteur) {
+        // Vérifie si l'email est fourni
+        if (emailConducteur == null || emailConducteur.isEmpty()) {
+            return ResponseEntity.badRequest().body("L'email du conducteur est requis.");
         }
 
-        List<Trajet> trajets = trajetService.afficherTrajetsParConducteur(utilisateurConnecte);
+        // Recherche l'utilisateur par son email
+        Utilisateur conducteur = utilisateurService.findByEmail(emailConducteur);
+
+        // Vérifie si l'utilisateur existe et s'il est un conducteur
+        if (conducteur == null || !conducteur.isEstConducteur()) {
+            return ResponseEntity.badRequest().body("Aucun conducteur trouvé avec cet email ou l'utilisateur n'est pas un conducteur.");
+        }
+
+        // Récupère la liste des trajets du conducteur
+        List<Trajet> trajets = trajetService.afficherTrajetsParConducteur(conducteur);
+
+        // Si aucun trajet n'est trouvé, retourne un message approprié
+        if (trajets.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucun trajet trouvé pour ce conducteur.");
+        }
+
+        // Retourne la liste des trajets associés au conducteur
         return ResponseEntity.ok(trajets);
     }
+
 
 
     @GetMapping("/rechercher-trajets")
@@ -97,6 +103,22 @@ public class TrajetController {
         // Retourner les résultats
         return ResponseEntity.ok(trajets);
     }
+
+    @RequestMapping("/liste_trajetP")
+    public ResponseEntity<?> afficherTrajetsDisponiblesPourPassager() {
+
+
+        // Utilisation du nouveau nom de méthode
+        List<Trajet> trajetsDisponibles = trajetService.getTrajetsDisponiblesPourPassager();
+        return ResponseEntity.ok(trajetsDisponibles);
+    }
+
+    @GetMapping("/trajet-is-valid")
+    public ResponseEntity<Boolean> isTrajetValid(@RequestParam("idT") Long id_trajet) {
+        boolean isValid = trajetService.isTrajetStillValid(id_trajet);
+        return ResponseEntity.ok(isValid);
+    }
+
 
 
 

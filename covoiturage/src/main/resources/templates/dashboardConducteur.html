@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="utf-8">
     <title>Dashboard Conducteur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
 
+</head>
 <body>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
     * {
         padding: 0;
         margin: 0;
@@ -19,80 +24,347 @@
         list-style: none;
         box-sizing: border-box;
     }
+
     body {
         font-family: "Montserrat", sans-serif;
     }
+
+    /* Style pour la barre de navigation */
     nav {
         background: #0082e6;
         height: 80px;
-        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        flex-wrap: nowrap;  /* Empêche le retour à la ligne */
     }
+
+    /* Logo de la barre de navigation */
     label.logo {
         color: white;
         font-size: 25px;
-        line-height: 80px;
-        padding: 0 100px;
         font-weight: bold;
     }
-    .email-display {
-        color: white;
-        font-size: 18px;
-        margin-left: 20px;
-        font-weight: normal;
+
+    /* Liens de la barre de navigation */
+    .navbar-links {
+        display: flex;
+        gap: 20px;  /* Espacement entre les liens */
     }
-    nav ul {
-        float: right;
-        margin-right: 20px;
-    }
-    nav ul li {
-        display: inline-block;
-        line-height: 80px;
-        margin: 0 5px;
-    }
-    nav ul li a {
+
+    .navbar-links a {
         color: white;
         font-size: 17px;
-        padding: 7px 13px;
+        padding: 10px 20px;
         border-radius: 3px;
         text-transform: uppercase;
     }
-    a.active, a:hover {
+
+    .navbar-links a.active, .navbar-links a:hover {
+        background: #1b9bff;
+        transition: 0.5s;
+    }
+
+    /* Conteneur des éléments à droite (email et bouton) */
+    .right-items {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .email-display {
+        color: white;
+        font-size: 18px;
+    }
+
+    .rating-btn {
+        background-color: #ffc107;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .rating-btn i {
+        margin-right: 5px;
+    }
+
+    /* Nouveau bouton de déconnexion */
+    .logout-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .logout-btn i {
+        margin-right: 5px;
+    }
+
+    /* Conteneur des trajets */
+    #trajets-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);  /* 4 colonnes */
+        gap: 20px;
+        justify-items: center;
+        margin-top: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 18rem;
+    }
+    a.active,
+    a:hover {
         background: #1b9bff;
         transition: .5s;
+        text-decoration: none;
+        list-style-type: none;
+    }
+    .modal {
+        display: none;
     }
 </style>
 
 <nav>
-    <!-- Menu icon -->
     <label class="logo">Co-voiturage</label>
-    <!-- Dynamic email display -->
-    <span class="email-display">Conducteur: <span id="email">[email@example.com]</span></span>
-    <!-- Navigation links -->
-    <ul>
-        <li><a class="active" href="#">Vos trajets</a></li>
-        <li><a href="/ajoutTrajetConducteur">Ajouter un trajet</a></li>
-        <li><a href="#">Trajets proposés</a></li>
-        <li><a href="#">Gestion des avis</a></li>
-    </ul>
+    <div class="navbar-links">
+        <a class="active" href="#">Vos trajets</a>
+        <a href="/ajoutTrajetConducteur">Ajouter un trajet</a>
+    </div>
+    <div class="right-items">
+        <span class="email-display">Conducteur: <span id="email">[email@example.com]</span></span>
+        <button class="rating-btn">
+            <i class="fa fa-star"></i>
+            <span id="average-rating">Chargement...</span>
+        </button>
+
+        <!-- Nouveau bouton de déconnexion -->
+        <button class="logout-btn" onclick="deconnecter()">
+            <i class="fa fa-sign-out-alt"></i>
+        </button>
+    </div>
 </nav>
 
-<section>
-    <div class="card" style="width: 18rem;">
-        <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="Un trajet">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+<section id="trajets-container" class="container">
+    <!-- Les cartes des trajets vont être insérées ici -->
+</section>
+
+<!-- Modal Bootstrap pour l'évaluation -->
+<div id="evalmodel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="evalmodelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="evalmodelLabel">Évaluer le Trajet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="note">Note</label>
+                        <input type="number" id="note" class="form-control" placeholder="Entrez une note (1-5)" min="1" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descp">Description</label>
+                        <textarea id="descp" class="form-control" placeholder="Entrez une description" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" id="confirmerEvaluation">Envoyer</button>
+            </div>
         </div>
     </div>
+</div>
 
-</section>
 
 <script>
     // Récupérer l'email depuis le stockage local
     const emailElement = document.getElementById('email');
     const userEmail = localStorage.getItem('userEmail') || "email_non_disponible@example.com";
     emailElement.textContent = userEmail;
-</script>
-</body>
 
+    window.onload = function() {
+        recupererMoyenneNotes();
+    };
+
+    async function recupererMoyenneNotes() {
+        const averageRatingElement = document.getElementById('average-rating');
+        try {
+            if (!userEmail) {
+                throw new Error("Email utilisateur non défini");
+            }
+
+            const response = await fetch(`http://localhost:8082/api/moyenne-avis?email=${userEmail}`);
+            console.log("Réponse de l'API reçue:", response);
+
+            if (!response.ok) {
+                throw new Error("Erreur dans la réponse de l'API");
+            }
+
+            const moyenneAvis = await response.json();
+
+            if (moyenneAvis != null) {
+                averageRatingElement.textContent = moyenneAvis.toFixed(2);
+            } else {
+                throw new Error("Moyenne des avis invalide");
+            }
+
+        } catch (error) {
+            console.error("Erreur lors de la récupération de la moyenne des notes:", error);
+            averageRatingElement.textContent = "Erreur";
+        }
+    }
+
+
+
+
+
+
+
+    // Fonction pour afficher les trajets du conducteur
+    async function afficherTrajets() {
+        try {
+            const response = await fetch(`http://localhost:8082/api/mes-trajets?email=${userEmail}`);
+            if (!response.ok) {
+                throw new Error("Erreur lors de la récupération des trajets");
+            }
+
+            const trajets = await response.json();
+            const trajetsContainer = document.getElementById('trajets-container');
+
+            if (trajets.length === 0) {
+                trajetsContainer.innerHTML = "<p>Aucun trajet trouvé pour ce conducteur.</p>";
+                return;
+            }
+
+            for (let trajet of trajets) {
+                const isTrajetValid = await trajetIsValid(trajet.idT); // Attendre la validation du trajet
+
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                card.innerHTML = `
+                <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="Un trajet">
+                <div class="card-body">
+                    <h5 class="card-title">De: <font color="#8a2be2"><i> ${trajet.depart} </i></font></h5>
+                    <h5 class="card-title">À: <font color="#8a2be2"><i>${trajet.destination} </i></font></h5>
+                    <p class="card-text">
+                        Date: ${trajet.date} <br>
+                        Heure: ${trajet.time} <br>
+                        Places disponibles: ${trajet.placeDispo} <br>
+                        Prix par place: ${trajet.prixPlace} <i>Dt</i>
+                    </p>
+                    ${isTrajetValid ? `<a href="#" class="btn btn-outline-primary" onclick="ouvrirModal(${trajet.idT}, '${userEmail}')">Évaluer ⭐</a>` : ''}
+                </div>
+            `;
+                trajetsContainer.appendChild(card);
+            }
+        } catch (error) {
+            console.error("Erreur:", error);
+            document.getElementById('trajets-container').innerHTML = "<p>Vous n'avez pas encore de trajets.</p>";
+        }
+    }
+
+
+    afficherTrajets();
+
+    // Fonction de déconnexion
+    function deconnecter() {
+        localStorage.removeItem('userEmail');
+        window.location.href = '/';
+    }
+
+    // l'affichage du model
+    function ouvrirModal(idTrajet,userEmail) {
+        const modal = document.getElementById('evalmodel');
+        modal.style.display = 'block';
+
+        $('#evalmodel').modal('show');
+
+        const confirmerEvaluationBtn = document.getElementById('confirmerEvaluation');
+        confirmerEvaluationBtn.onclick = function() {
+            EvaleurTrajet(idTrajet, userEmail);
+        };
+
+        // Fermeture du modal lorsque le bouton "Close" (icône ×) est cliqué
+        const closeBtn = document.querySelector('.close');
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    }
+
+    //Evaluer
+    function EvaleurTrajet(idTrajet,userEmail) {
+        const note = document.getElementById('note').value;
+        const descp = document.getElementById('descp').value;
+
+        const avisRequest = {
+            note: note,
+            descp: descp
+        };
+
+
+        fetch(`http://localhost:8082/api/evaluer?emailUtilisateur=${userEmail}&idTrajet=${idTrajet}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(avisRequest)
+        })
+            .then(async response => {
+                const result = await response.text();
+
+                if (!response.ok) {
+                    throw new Error(result);
+                }
+
+                return result;
+            })
+            .then(message => {
+                alert(message);
+                $('#evalmodel').modal('hide');
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'évaluation :', error.message);
+                alert("Erreur : " + error.message);
+            });
+    }
+
+    async function trajetIsValid(idTrajet) {
+        try {
+            const response = await fetch(`http://localhost:8082/api/trajet-is-valid?idT=${idTrajet}`);
+
+            if (!response.ok) {
+                throw new Error("Erreur lors de la vérification de la validité du trajet");
+            }
+
+            // Récupérer et retourner la réponse JSON (vrai ou faux)
+            const isValid = await response.json();
+            return isValid;  // Retourne directement la valeur
+        } catch (error) {
+            console.error("Erreur dans la fonction trajetIsValid:", error);
+            return false;  // Si une erreur se produit, on retourne false
+        }
+    }
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/6m5N6F3u1kPEUs+Y5IsTI5RhSBm7VVK+lt8K5b" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-oS3vJWv+0UjzBv3m6Fm3/ESa7OgABoo1PEnGbNhU/8imtfT1vRKE9xWW2x9WlH" crossorigin="anonymous"></script>
+
+</body>
 </html>
