@@ -255,13 +255,15 @@
                 card.innerHTML = `
                 <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="Un trajet">
                 <div class="card-body">
-                    <h5 class="card-title">De: <font color="#8a2be2"><i> ${trajet.depart} </i></font></h5>
-                    <h5 class="card-title">À: <font color="#8a2be2"><i>${trajet.destination} </i></font></h5>
+                    <h5 class="card-title">De: <font color="#48a347"><i> ${trajet.depart} </i></font></h5>
+                    <h5 class="card-title">À: <font color="#48a347"><i>${trajet.destination} </i></font></h5>
                     <p class="card-text">
-                        Date: ${trajet.date} <br>
-                        Heure: ${trajet.time} <br>
-                        Places disponibles: ${trajet.placeDispo} <br>
-                        Prix par place: ${trajet.prixPlace} <i>Dt</i>
+                       <b>Date:</b>  ${trajet.date} <br>
+                        <b>Heure:</b> ${trajet.time} <br>
+                        <b>Places disponibles:</b> ${trajet.placeDispo} <br>
+                        <b>Prix par place:</b> ${trajet.prixPlace} <i>Dt</i> <br>
+                        ${trajet.com && trajet.com.trim() !== "" ? `<b>Commentaire:</b> ${trajet.com} ` : ""}
+
                     </p>
                     ${isTrajetValid ? `<a href="#" class="btn btn-outline-primary" onclick="ouvrirModal(${trajet.idT}, '${userEmail}')">Évaluer ⭐</a>` : ''}
                 </div>

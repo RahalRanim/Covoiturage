@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Style pour la barre de navigation */
+nav {
+    background: #0082e6;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-wrap: nowrap;  /* Empêche le retour à la ligne */
+}
+
+/* Logo de la barre de navigation */
+label.logo {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Liens de la barre de navigation */
+.navbar-links {
+    display: flex;
+    gap: 20px;  /* Espacement entre les liens */
+}
+
+.navbar-links a {
+    color: white;
+    font-size: 17px;
+    padding: 10px 20px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.navbar-links a.active, .navbar-links a:hover {
+    background: #1b9bff;
+    transition: 0.5s;
+}
+
+/* Conteneur des éléments à droite (email et bouton) */
+.right-items {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.email-display {
+    color: white;
+    font-size: 18px;
+}
+
+.rating-btn {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.rating-btn i {
+    margin-right: 5px;
+}
+
+/* Nouveau bouton de déconnexion */
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.logout-btn i {
+    margin-right: 5px;
+}
+
+/* Conteneur des trajets */
+#trajets-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 colonnes */
+    gap: 20px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 18rem;
+}
+a.active,
+a:hover {
+    background: #1b9bff;
+    transition: .5s;
+    text-decoration: none;
+    list-style-type: none;
+}
+.modal {
+    display: none;
+}

@@ -21,7 +21,7 @@ public class Trajet {
     private LocalTime time;
     @Column(name = "place_dispo")
     private int placeDispo;
-
+    private String com;
     @Column(name = "prix_place")
     private double prixPlace;
     @ManyToOne

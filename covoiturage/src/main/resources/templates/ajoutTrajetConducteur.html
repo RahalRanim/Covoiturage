@@ -207,6 +207,10 @@
             <label for="prixPlace" class="form-label font-weight-bold">Prix par place (Dt)</label>
             <input type="number" class="form-control" id="prixPlace" required>
         </div>
+        <div class="mb-3">
+            <label for="com" class="form-label font-weight-bold">Commentaire</label>
+            <textarea  type="text" class="form-control" id="com" cols="30" rows="4"></textarea>
+        </div>
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Ajouter</button>
             <button type="reset" class="btn btn-danger">Annuler</button>
@@ -273,6 +277,7 @@
             time: document.getElementById('time').value,
             placeDispo: document.getElementById('placeDispo').value,
             prixPlace: document.getElementById('prixPlace').value,
+            com: document.getElementById('com').value,
         };
 
         try {

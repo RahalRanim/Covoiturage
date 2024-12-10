@@ -251,28 +251,30 @@
     // Charger les trajets disponibles
     fetch('http://localhost:8082/api/liste_trajetP')
         .then(response => response.json())
-        .then(trajets => {
+        .then(async trajets => {
             const trajetsContainer = document.getElementById('trajets-container');
-            trajets.forEach(trajet => {
+            for (const trajet of trajets) {
+                const isTrajetValid = await trajetIsValid(trajet.idT);
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.innerHTML = `
                     <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">De: <font color="#8a2be2"><i>${trajet.depart}</i></font></h5>
-                        <h5 class="card-title">À: <font color="#8a2be2"><i>${trajet.destination}</i></font></h5>
+                        <h5 class="card-title">De: <font color="#48a347"><i>${trajet.depart}</i></font></h5>
+                        <h5 class="card-title">À: <font color="#48a347"><i>${trajet.destination}</i></font></h5>
                         <p class="card-text">
-                            Date: ${trajet.date} <br>
-                            Heure: ${trajet.time} <br>
-                            Places disponibles: ${trajet.placeDispo} <br>
-                            Prix par place: ${trajet.prixPlace} <i>Dt</i> <br>
-                            Conducteur: ${trajet.conducteur.nom} ${trajet.conducteur.prenom}
+                           <b> Date: </b> ${trajet.date} <br>
+                           <b> Heure:</b> ${trajet.time} <br>
+                            <b> Places disponibles: </b> ${trajet.placeDispo} <br>
+                            <b>Prix par place:</b> ${trajet.prixPlace} <i>Dt</i> <br>
+                           <b> Conducteur: </b> ${trajet.conducteur.nom} ${trajet.conducteur.prenom} <br>
+                           ${trajet.com && trajet.com.trim() !== "" ? `<b>Commentaire:</b> ${trajet.com} ` : ""}
                         </p>
-                        <a href="#" class="btn btn-primary" onclick="ouvrirModal(${trajet.idT})">Réserver</a>
+                        ${!isTrajetValid ? `<a href="#" class="btn btn-primary" onclick="ouvrirModal(${trajet.idT})">Réserver</a>` : ''}
                     </div>
                     `;
                 trajetsContainer.appendChild(card);
-            });
+            }
         })
         .catch(error => console.error('Erreur lors de la récupération des trajets:', error));
 
@@ -380,33 +382,51 @@
             }
         })
             .then(response => response.json())
-            .then(trajets => {
+            .then(async trajets => {
                 const trajetsContainer = document.getElementById('trajets-container');
                 trajetsContainer.innerHTML = ''; // Réinitialiser l'affichage
 
-                trajets.forEach(trajet => {
+                for (const trajet of trajets) {
+                    const isTrajetValid = await trajetIsValid(trajet.idT);
                     const card = document.createElement('div');
                     card.classList.add('card');
                     card.innerHTML = `
                     <img src="https://img.freepik.com/vecteurs-libre/illustration-concept-covoiturage_114360-9238.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">De: <font color="#8a2be2"><i>${trajet.depart}</i></font></h5>
-                        <h5 class="card-title">À: <font color="#8a2be2"><i>${trajet.destination}</i></font></h5>
+                        <h5 class="card-title">De: <font color="#48a347"><i>${trajet.depart}</i></font></h5>
+                        <h5 class="card-title">À: <font color="#48a347"><i>${trajet.destination}</i></font></h5>
                         <p class="card-text">
-                            Date: ${trajet.date} <br>
-                            Heure: ${trajet.time} <br>
-                            Places disponibles: ${trajet.placeDispo} <br>
-                            Prix par place: ${trajet.prixPlace} <i>Dt</i> <br>
-                            Conducteur: ${trajet.conducteur.nom} ${trajet.conducteur.prenom}
+                           <b> Date: </b> ${trajet.date} <br>
+                           <b> Heure:</b> ${trajet.time} <br>
+                            <b> Places disponibles: </b> ${trajet.placeDispo} <br>
+                            <b>Prix par place:</b> ${trajet.prixPlace} <i>Dt</i> <br>
+                           <b> Conducteur: </b> ${trajet.conducteur.nom} ${trajet.conducteur.prenom} <br>
+                           ${trajet.com && trajet.com.trim() !== "" ? `<b>Commentaire:</b> ${trajet.com} ` : ""}
                         </p>
-                        <a href="#" class="btn btn-primary" onclick="ouvrirModal(${trajet.idT})">Réserver</a>
+                        ${!isTrajetValid ? `<a href="#" class="btn btn-primary" onclick="ouvrirModal(${trajet.idT})">Réserver</a>` : ''}
                     </div>
                     `;
                     trajetsContainer.appendChild(card);
-                });
+                }
             })
             .catch(error => console.error('Erreur lors de la recherche des trajets:', error));
     };
+    async function trajetIsValid(idTrajet) {
+        try {
+            const response = await fetch(`http://localhost:8082/api/trajet-is-valid?idT=${idTrajet}`);
+
+            if (!response.ok) {
+                throw new Error("Erreur lors de la vérification de la validité du trajet");
+            }
+
+            // Récupérer et retourner la réponse JSON (vrai ou faux)
+            const isValid = await response.json();
+            return isValid;  // Retourne directement la valeur
+        } catch (error) {
+            console.error("Erreur dans la fonction trajetIsValid:", error);
+            return false;  // Si une erreur se produit, on retourne false
+        }
+    }
 </script>
 
 </body>
